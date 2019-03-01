@@ -11,6 +11,7 @@ PODS:
     - Firebase/Database
     - Firebase/Firestore
     - Flutter
+  - Fabric (1.9.0)
   - Firebase/Auth (5.17.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.3.1)
@@ -86,6 +87,9 @@ PODS:
     - FirebaseCore (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
   - Flutter (1.0.0)
+  - flutter_twitter_login (0.0.1):
+    - Flutter
+    - TwitterKit
   - GoogleAppMeasurement (5.6.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -134,6 +138,10 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
+  - TwitterCore (2.8.0):
+    - Fabric
+  - TwitterKit (2.8.1):
+    - TwitterCore (>= 2.8)
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -142,10 +150,12 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_twitter_login (from `.symlinks/plugins/flutter_twitter_login/ios`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - BoringSSL-GRPC
+    - Fabric
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -163,6 +173,8 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
+    - TwitterCore
+    - TwitterKit
 
 EXTERNAL SOURCES:
   cloud_firestore:
@@ -177,10 +189,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: ".symlinks/flutter/ios"
+  flutter_twitter_login:
+    :path: ".symlinks/plugins/flutter_twitter_login/ios"
 
 SPEC CHECKSUMS:
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
   cloud_firestore: 980813a98d8beb5c321b589845fabf6c4c5bd571
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Firebase: 59d557e064217fab6a03ff00baa73c06e73832e6
   firebase_analytics: 06fd3e199bfbc003a9949b90f3e3c6332fa1299e
   firebase_auth: a5b249720380ab4ee1c633368cbb84aac9959359
@@ -195,6 +210,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 4522aad88f69297622062c0e9ffccdee3dd9b151
   FirebaseStorage: 29075f874c2b3cf61e5221a62c4ceefc809e5412
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  flutter_twitter_login: 3cdd20f570fc128331e773432f8a3c98207ee7cb
   GoogleAppMeasurement: 008e04ecd8efedd97a693aea8634aefe220bd26e
   GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
   "gRPC-C++": e76441995900ac90e9bd98644ab4733f12521edf
@@ -203,6 +219,8 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
+  TwitterCore: e959987be23c767004d29eb7fab8d85d8585a2e5
+  TwitterKit: 3b6044a7320340326a4098f3e37aa1dbaeb94942
 
 PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
 
