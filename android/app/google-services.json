@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "471370874295",
+    "firebase_url": "https://ultihype.firebaseio.com",
+    "project_id": "ultihype",
+    "storage_bucket": "ultihype.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471370874295:android:f2b478c37b4817e6",
+        "android_client_info": {
+          "package_name": "com.leahdgarber.ultihype"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471370874295-fn7vg3u915m9qfghpst2c01005uvl5v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeVUOuB0PS7q-1JPHrSBKqguWddT_iBkY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
