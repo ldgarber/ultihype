@@ -75,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showCancelMessage () {} 
   void _showErrorMessage (error) {}
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +83,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: isLogged 
-          ? null 
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                 "Signed in!" 
+                ) 
+              ],
+            )
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
