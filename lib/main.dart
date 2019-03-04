@@ -66,7 +66,8 @@ class MyApp extends StatelessWidget {
       title: 'UltiHype',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
-      ),
+        fontFamily: 'FugazOne', 
+       ),
       home: Builder( 
         builder: (context) => 
           IntroViewsFlutter(
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
               Navigator.pushReplacement(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => MyHomePage(title: 'UltiHype Home Page'), 
+                  builder: (context) => MyHomePage(title: 'UltiHype'), 
                 ),  
               ); 
             }, 
@@ -172,6 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        centerTitle: true, 
       ),
       body: Center(
         child: isLogged 
