@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
           IntroViewsFlutter(
             introPages, 
             onTapDoneButton: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context, 
                 MaterialPageRoute(
                   builder: (context) => MyHomePage(title: 'UltiHype Home Page'), 
