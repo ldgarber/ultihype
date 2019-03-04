@@ -169,6 +169,29 @@ class _MyHomePageState extends State<MyHomePage> {
         }); 
   }
 
+  Widget _logInScreen() { 
+    return new Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Image.asset(
+          'assets/field-at-night.jpg', 
+          fit: BoxFit.cover
+        ), 
+        Text(
+          "Welcome!", 
+          style: TextStyle(height: 3.0, fontSize: 34), 
+        ), 
+        Text(
+          "Sign up or sign in with Twitter", 
+          style: TextStyle(height: 3.0, fontSize: 22), 
+        ), 
+        TwitterSignInButton(
+          onPressed: _logInTwitter
+        )        
+      ]
+    ); 
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -193,14 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
               ],
             )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                TwitterSignInButton(
-                  onPressed: _logInTwitter
-                ) 
-              ],
-            ),
+          : _logInScreen()      
       ),
     );
   }
