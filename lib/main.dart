@@ -33,6 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isLogged = false; 
 
   FirebaseUser myUser; 
+  String user_name; 
+  String image_url; 
 
   void _logInTwitter () { 
     _loginWithTwitter().then((response) {
@@ -41,6 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
         isLogged = true; 
         setState(() {}); 
       } 
+    });  
+  } 
+
+  void _signOut() async {
+    _auth.signOut().then((response) {
+      isLogged = false; 
+      setState(() {}); 
     });  
   } 
 
@@ -76,6 +85,16 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showErrorMessage (error) {}
 
   @override
+  initState() {
+    super.initState(); 
+    _auth.onAuthStateChanged
+        .firstWhere((user) => user != null) 
+        .then((user) {
+          user_name = user.displayName; 
+          image_url = user.photoUrl; 
+        }); 
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -88,7 +107,15 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Text(
                  "${myUser}"
-                ) 
+                 "${user_name}"
+                ), 
+                Image.network(image_url), 
+                FlatButton(
+                  child: const Text('Sign out'),
+                  onPressed: () async {
+                    await _signOut();
+                  },
+                )
               ],
             )
           : Column(
