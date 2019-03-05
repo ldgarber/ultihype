@@ -4,11 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
+import 'package:ultihype/pages/home.page.dart';
+// import 'package:ultihype/pages/login.page.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  //set default home
+  Widget _defaultHome = new MyHomePage(title: "Ultihype"); 
 
   // Intro Views pages: 
   final introPages = [ 
@@ -76,7 +81,7 @@ class MyApp extends StatelessWidget {
               Navigator.pushReplacement(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => MyHomePage(title: 'UltiHype'), 
+                  builder: (context) => _defaultHome, 
                 ),  
               ); 
             }, 
