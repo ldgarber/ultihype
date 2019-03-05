@@ -5,7 +5,7 @@ import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:ultihype/pages/home.page.dart';
-// import 'package:ultihype/pages/login.page.dart';
+import 'package:ultihype/pages/login.page.dart';
 
 void main() => runApp(MyApp());
 
@@ -94,6 +94,10 @@ class MyApp extends StatelessWidget {
             ), 
           ), //IntroViewsFlutter
       ), //Builder
+      routes: <String, WidgetBuilder>{
+        '/home': (BuildContext context) => new HomePage(), 
+        '/login': (BuildContext context) => new LoginPage()
+      },  
     ); //Material App
   }
 }

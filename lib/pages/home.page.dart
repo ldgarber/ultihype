@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   FirebaseAuth _auth = FirebaseAuth.instance; 
-  bool isLogged = true; 
 
   FirebaseUser myUser; 
   String user_name; 
@@ -22,8 +21,7 @@ class _HomePageState extends State<HomePage> {
 
   void _signOut() async {
     _auth.signOut().then((response) {
-      isLogged = false; 
-      setState(() {}); 
+      Navigator.of(context).pushReplacementNamed('/login'); 
     });  
   } 
 
