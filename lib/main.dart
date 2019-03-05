@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:ultihype/pages/home.page.dart';
@@ -9,9 +10,14 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
+  FirebaseAuth _auth = FirebaseAuth.instance; 
+
   //set default home
   Widget _defaultHome = new LoginPage(); 
 
+  //need to check for logged in user and set _defaultHome accordingly
+
+  //need to pull Intro Views login into a different file
   // Intro Views pages: 
   final introPages = [ 
     PageViewModel(
