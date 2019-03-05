@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
   //set default home
-  Widget _defaultHome = new MyHomePage(title: "Ultihype"); 
+  Widget _defaultHome = new LoginPage(); 
 
   // Intro Views pages: 
   final introPages = [ 

@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   FirebaseAuth _auth = FirebaseAuth.instance; 
 
   FirebaseUser myUser; 
@@ -32,14 +33,14 @@ class _HomePageState extends State<HomePage> {
         .firstWhere((user) => user != null) 
         .then((user) {
           user_name = user.displayName; 
-          image_url = user.photoUrl; 
+          //image_url = user.photoUrl; 
         }); 
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("UltiHype"),
         centerTitle: true, 
       ),
       body: Center(
@@ -50,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                  "${myUser}"
                  "${user_name}"
                 ), 
-                Image.network(image_url), 
+                //Image.network(image_url), 
                 FlatButton(
                   child: const Text('Sign out'),
                   onPressed: () async {

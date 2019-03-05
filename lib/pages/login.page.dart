@@ -10,20 +10,19 @@ class LoginPage extends StatefulWidget {
 } 
 
 class _LoginPageState extends State<LoginPage> {
-  String _status = 'no-action'; 
+  String _status = ''; 
 
   FirebaseAuth _auth = FirebaseAuth.instance; 
   FirebaseUser myUser; 
 
   void _logInTwitter () { 
-    setState(() => this._status = 'loading'); 
+    setState(() => this._status = 'Loading...'); 
     _loginWithTwitter().then((response) {
       if (response != null) {
         myUser = response; 
-        setState(() {}); 
         Navigator.of(context).pushReplacementNamed('/home'); 
       } else {
-        setState(() => this._status = 'rejected'); 
+        setState(() => this._status = 'Error in log in, try again'); 
       } 
     });  
   } 
@@ -78,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(height: 3.0, fontSize: 22), 
         ), 
         Text(
-          "${this._status})"
+          "${this._status}"
         ), 
         TwitterSignInButton(
           onPressed: _logInTwitter
