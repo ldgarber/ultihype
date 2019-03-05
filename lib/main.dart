@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_login/flutter_twitter_login.dart'; 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:intro_views_flutter/Models/page_view_model.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:ultihype/pages/home.page.dart';
