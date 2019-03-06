@@ -37,10 +37,30 @@ class _HomePageState extends State<HomePage> {
   List<BottomNavigationBarItem> _bottomNavItems() {
     return <BottomNavigationBarItem>[
       BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')), 
-      BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')), 
-      BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),  
+      BottomNavigationBarItem(icon: Icon(Icons.people), title: Text('Roster')), 
+      BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('Profile')),  
     ]; 
   } 
+
+  final _pages = [
+    Text('Home Page'), //Home 
+    Text('Roster page'), //Roster 
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        //Text(
+        // "${user_name}"
+        //), 
+        //(image_url != null) ? Image.network(image_url) : null, 
+        FlatButton(
+          child: const Text('Sign out'),
+          onPressed: () async {
+          //  await _signOut();
+          },
+        )
+      ] //.where(notNull).toList(), 
+    ), //Profile
+  ]; 
 
   @override
   initState() {
@@ -63,22 +83,8 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true, 
       ), //appBar 
       body: Center(
-        child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                 "${user_name}"
-                ), 
-                (image_url != null) ? Image.network(image_url) : null, 
-                FlatButton(
-                  child: const Text('Sign out'),
-                  onPressed: () async {
-                    await _signOut();
-                  },
-                )
-              ].where(notNull).toList(),
-            ) 
-      ), //body
+        child: _pages.elementAt(_selectedIndex), 
+      ), 
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavItems(),  
         currentIndex: _selectedIndex,
