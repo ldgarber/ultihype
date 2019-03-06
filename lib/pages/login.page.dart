@@ -61,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
   @override 
   Widget _logInScreen() { 
     return new Container(
-      color: Colors.white.withOpacity(0.2), 
       child: 
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -91,13 +90,13 @@ class _LoginPageState extends State<LoginPage> {
               fit: BoxFit.fill, 
             ), 
           ), 
+          AppBar(
+            title: new Text('UltiHype'), 
+            backgroundColor: Colors.white.withOpacity(0.2), 
+          ), //appbar 
           Positioned.fill(
             child: _logInScreen(), 
           ), 
-          AppBar(
-            title: new Text('UltiHype'), 
-            backgroundColor: Colors.transparent, 
-          ), //appbar 
         ], //Widget list 
     ) //Stack
   ); //Scaffold 
