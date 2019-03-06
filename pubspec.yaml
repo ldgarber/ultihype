@@ -56,6 +56,7 @@ flutter:
     - assets/megaphone.png
     - assets/hype.png
     - assets/field-at-night.jpg
+    - assets/playing-on-field.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
