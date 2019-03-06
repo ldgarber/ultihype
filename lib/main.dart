@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intro_views_flutter/intro_views_flutter.dart';
+import 'package:ultihype/pages/intropages.dart'; 
+import 'package:ultihype/pages/splash.page.dart'; 
 import 'package:ultihype/pages/home.page.dart';
 import 'package:ultihype/pages/login.page.dart';
-import 'package:ultihype/pages/intropages.dart'; 
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
   FirebaseAuth _auth = FirebaseAuth.instance; 
 
-  //set default home
-  Widget _defaultHome = new LoginPage(); 
-
   //need to check for logged in user and set _defaultHome accordingly
+  Widget _handleCurrentScreen() {
+      return new StreamBuilder<FirebaseUser>(
+        stream: _auth.onAuthStateChanged,
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return new SplashPage();
+          } else {
+            if (snapshot.hasData) {
+              return new HomePage();
+            }
+            return new LoginPage();
+          }
+        }
+      );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +46,7 @@ class MyApp extends StatelessWidget {
               Navigator.pushReplacement(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => _defaultHome, 
+                  builder: (context) => _handleCurrentScreen(), 
                 ),  
               ); 
             }, 

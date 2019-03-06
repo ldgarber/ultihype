@@ -4,7 +4,7 @@ import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+  HomePage({Key key, this.title }) : super(key: key);
 
   final String title;
 
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   FirebaseAuth _auth = FirebaseAuth.instance; 
 
-  FirebaseUser myUser; 
+  FirebaseUser currentUser; 
   String user_name; 
   String image_url; 
 
@@ -30,10 +30,13 @@ class _HomePageState extends State<HomePage> {
   initState() {
     super.initState(); 
     _auth.onAuthStateChanged
-        .firstWhere((user) => user != null) 
-        .then((user) {
-          user_name = user.displayName; 
-          //image_url = user.photoUrl; 
+       .firstWhere((user) => user != null) 
+       .then((user) {
+          setState(() => {
+            this.currentUser = user, 
+            this.user_name = user.displayName,
+            this.image_url = user.photoUrl 
+          }); 
         }); 
   }
 
@@ -48,10 +51,9 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                 "${myUser}"
                  "${user_name}"
                 ), 
-                //Image.network(image_url), 
+                Image.network(image_url), 
                 FlatButton(
                   child: const Text('Sign out'),
                   onPressed: () async {
