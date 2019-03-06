@@ -13,17 +13,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  //state variables
   FirebaseAuth _auth = FirebaseAuth.instance; 
-
+  int _selectedIndex = 0;
   FirebaseUser currentUser; 
   String user_name; 
   String image_url; 
+
+  bool notNull(Object o) => o != null;
 
   void _signOut() async {
     _auth.signOut().then((response) {
       Navigator.of(context).pushReplacementNamed('/login'); 
     });  
+  } 
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  List<BottomNavigationBarItem> _bottomNavItems() {
+    return <BottomNavigationBarItem>[
+      BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')), 
+      BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')), 
+      BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),  
+    ]; 
   } 
 
   @override
@@ -45,7 +61,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("UltiHype"),
         centerTitle: true, 
-      ),
+      ), //appBar 
       body: Center(
         child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -53,16 +69,21 @@ class _HomePageState extends State<HomePage> {
                 Text(
                  "${user_name}"
                 ), 
-                Image.network(image_url), 
+                (image_url != null) ? Image.network(image_url) : null, 
                 FlatButton(
                   child: const Text('Sign out'),
                   onPressed: () async {
                     await _signOut();
                   },
                 )
-              ],
-            )
-      ),
-    );
+              ].where(notNull).toList(),
+            ) 
+      ), //body
+      bottomNavigationBar: BottomNavigationBar(
+        items: _bottomNavItems(),  
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ), //bottomNavigationBar
+    ); //Scaffold
   }
 }
