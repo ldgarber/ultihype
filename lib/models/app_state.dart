@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart'; 
+
 class AppState {
   // tell app when to display loading spinners
   bool isLoading; 
@@ -5,7 +7,7 @@ class AppState {
   //Constructor
   AppState({ 
     this.isLoading = false, 
-    this.user, 
+    //this.user, 
   }); 
 
   // A constructor for when the app is loading
@@ -13,6 +15,6 @@ class AppState {
 
   @override 
   String toString() {
-    return 'AppState{isLoading: $isLoading, user: ${user?.displayName ?? 'null'}}; 
+    return "test"; //'AppState{isLoading: $isLoading, user: ${user?.displayName ?? 'null'}}'; 
   } 
 } 

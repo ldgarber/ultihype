@@ -8,7 +8,7 @@ import 'package:ultihype/pages/login.page.dart';
 
 class AppRootWidget extends StatefulWidget {
   @override 
-  AppRootWidget State createState() => new AppRootWidgetState(); 
+  AppRootWidgetState createState() => new AppRootWidgetState(); 
 } 
 
 class AppRootWidgetState extends State<AppRootWidget> {
