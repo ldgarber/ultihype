@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          "test" //appState.user.displayName 
+          'user info here'//appState.user.displayName 
         ), 
         //(image_url != null) ? Image.network(image_url) : null, 
         FlatButton(
