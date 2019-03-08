@@ -1,6 +1,9 @@
-import 'package:ultihype/models/app_state.dart'; 
-import 'package:flutter/foundation.dart'; 
 import 'package:flutter/material.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_twitter_login/flutter_twitter_login.dart'; 
+import 'package:flutter/foundation.dart'; 
+import 'dart:async'; 
+import 'package:ultihype/models/app_state.dart'; 
 
 class AppStateContainer extends StatefulWidget {
   // Your apps state is managed by the container
@@ -28,21 +31,70 @@ class AppStateContainer extends StatefulWidget {
 }
 
 class _AppStateContainerState extends State<AppStateContainer> {
-  // Just padding the state through so we don't have to 
-  // manipulate it with widget.state.
   AppState state;
+
+  final twitterLogin = new TwitterLogin(
+    consumerKey: 'FxTaSf2ZBGlQ0wwi4Mw2nDv57',
+    consumerSecret: 'nRMpbnhHCGfdLyp94BVzO47GzKuutcaTKNsDqys53cEzgMxSzO',
+  );
 
   @override
   void initState() {
-    // You'll almost certainly want to do some logic 
-    // in InitState of your AppStateContainer. In this example, we'll eventually
-    // write the methods to check the local state
-    // for existing users and all that.
     super.initState();
+    if (widget.state != null) {
+      state = widget.state; 
+    } else {
+      state = new AppState.loading(); 
+      initUser(); 
+    } 
   }
 
-  // So the WidgetTree is actually
-  // AppStateContainer --> InheritedStateContainer --> The rest of your app. 
+  Future initUser() async {
+//  twitterUser = await _ensureLoggedInOnStartUp(); 
+    var twitterUser = null; 
+    if (twitterUser == null) {
+      setState(() {
+        state.isLoading = false; 
+      }); 
+    } else {
+      var firebaseUser = await logIntoFirebase(); 
+    } 
+  } 
+  
+  logIntoFirebase() async {
+    FirebaseUser firebaseUser; 
+    FirebaseAuth _auth = FirebaseAuth.instance;     
+
+    try {
+      //GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      TwitterLoginResult result = await twitterLogin.authorize();
+      var session = result.session;
+      final AuthCredential credential = TwitterAuthProvider.getCredential(
+        authToken: session.token ?? '', 
+        authTokenSecret: session.secret ?? ''); 
+
+      firebaseUser = await _auth.signInWithCredential(credential); 
+
+      print('Logged in: ${firebaseUser.displayName}');
+      setState(() {
+        state.isLoading = false;
+        state.user = firebaseUser;
+      });
+    } catch (error) {
+      print(error);
+      return null;
+    }
+  } 
+
+//  Future<dynamic> _ensureLoggedInOnStartUp() async {
+//    GoogleSignInAccount user = googleSignIn.currentUser;
+//    if (user == null) {
+//      user = await googleSignIn.signInSilently();
+//    }
+//    googleUser = user;
+//    return user;
+//  }
+
   @override
   Widget build(BuildContext context) {
     return new _InheritedStateContainer(

@@ -17,31 +17,28 @@ class AppRootWidgetState extends State<AppRootWidget> {
       fontFamily: 'FugazOne', 
     );
 
-  FirebaseAuth _auth = FirebaseAuth.instance; 
-
-  //need to check for logged in user and set _defaultHome accordingly
-  Widget _handleCurrentScreen() {
-      return new StreamBuilder<FirebaseUser>(
-        stream: _auth.onAuthStateChanged,
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return new SplashPage();
-          } else {
-            if (snapshot.hasData) {
-              return new HomePage();
-            }
-            return new LoginPage();
-          }
-        }
-      );
-  }
-
-
+// Widget _handleCurrentScreen() { OLD
+//      return new StreamBuilder<FirebaseUser>(
+//        stream: _auth.onAuthStateChanged,
+//        builder: (BuildContext context, snapshot) {
+//          if (snapshot.connectionState == ConnectionState.waiting) {
+//            return new SplashPage();
+//         } else {
+//          if (snapshot.hasData) {
+//             return new HomePage();
+//           }
+//           return new LoginPage();
+//         }
+//       }
+//     );
+//}
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'UltiHype',
       theme: _themeData,
+      debugShowCheckedModeBanner: false, 
       home: Builder( 
         builder: (context) => 
           IntroViewsFlutter(
@@ -51,7 +48,7 @@ class AppRootWidgetState extends State<AppRootWidget> {
               Navigator.pushReplacement(
                 context, 
                 MaterialPageRoute(
-                  builder: (context) => _handleCurrentScreen(), 
+                  builder: (context) => new HomePage(), 
                 ),  
               ); 
             }, 

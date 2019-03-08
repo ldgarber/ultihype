@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AppState {
-  // tell app when to display loading spinners
   bool isLoading; 
+  FirebaseUser user; 
 
   //Constructor
   AppState({ 
     this.isLoading = false, 
-    //this.user, 
+    this.user, 
   }); 
 
   // A constructor for when the app is loading
@@ -15,6 +16,6 @@ class AppState {
 
   @override 
   String toString() {
-    return "test"; //'AppState{isLoading: $isLoading, user: ${user?.displayName ?? 'null'}}'; 
+    return 'AppState{isLoading: $isLoading, user: ${user?.displayName ?? 'null'}}'; 
   } 
 } 

@@ -1,13 +1,12 @@
-import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_twitter_login/flutter_twitter_login.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ultihype/main.dart';
+import 'package:ultihype/app_state_container.dart'; 
+import 'package:ultihype/models/app_state.dart'; 
+import 'package:ultihype/pages/login.page.dart'; 
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title }) : super(key: key);
-
-  final String title;
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -18,9 +17,6 @@ class _HomePageState extends State<HomePage> {
   //state variables
   FirebaseAuth _auth = FirebaseAuth.instance; 
   int _selectedIndex = 0;
-  FirebaseUser currentUser; 
-  String user_name; 
-  String image_url; 
 
   bool notNull(Object o) => o != null;
 
@@ -50,9 +46,9 @@ class _HomePageState extends State<HomePage> {
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        //Text(
-        // "${user_name}"
-        //), 
+        Text(
+          "test" //appState.user.displayName 
+        ), 
         //(image_url != null) ? Image.network(image_url) : null, 
         FlatButton(
           child: const Text('Sign out'),
@@ -64,34 +60,50 @@ class _HomePageState extends State<HomePage> {
     ), //Profile
   ]; 
 
-  @override
-  initState() {
-    super.initState(); 
-    _auth.onAuthStateChanged
-       .firstWhere((user) => user != null) 
-       .then((user) {
-          setState(() => {
-            this.currentUser = user, 
-            this.user_name = user.displayName,
-            this.image_url = user.photoUrl 
-          }); 
-        }); 
-  }
+  Widget get _pageToDisplay {
+    if (appState.isLoading) {
+      return _loadingView; 
+    } else if (!appState.isLoading && appState.user == null) {
+      return new LoginPage();  
+    } else {
+      return _homeView; 
+    } 
+  } 
 
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+  Widget get _testAuthView {
+    return new Center(
+        child: Text("login"),  
+        ); 
+  } 
+
+  Widget get _loadingView {
+    return new Center(
+        child: new CircularProgressIndicator(), 
+        ); 
+  } 
+
+  Widget get _homeView {
+    return new Scaffold( 
+        appBar: AppBar(
         title: Text("UltiHype"),
         centerTitle: true, 
       ), //appBar 
       body: Center(
         child: _pages.elementAt(_selectedIndex), 
-      ), 
+        ), 
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavItems(),  
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ), //bottomNavigationBar
-    ); //Scaffold
+    ); 
+  } 
+
+  @override
+  Widget build(BuildContext context) {
+    var container = AppStateContainer.of(context); 
+    appState = container.state; 
+
+    return _pageToDisplay; 
   }
 }
