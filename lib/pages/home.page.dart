@@ -8,23 +8,23 @@ import 'package:ultihype/pages/login.page.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => new _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   AppState appState; 
 
   //state variables
-  FirebaseAuth _auth = FirebaseAuth.instance; 
+  //FirebaseAuth _auth = FirebaseAuth.instance; 
   int _selectedIndex = 0;
 
   bool notNull(Object o) => o != null;
 
-  void _signOut() async {
-    _auth.signOut().then((response) {
-      Navigator.of(context).pushReplacementNamed('/login'); 
-    });  
-  } 
+  //void _signOut() async {
+  //  _auth.signOut().then((response) {
+  //    Navigator.of(context).pushReplacementNamed('/login'); 
+  //  });  
+  //} 
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     ]; 
   } 
 
-  final _pages = [
+  var _pages = [
     Text('Home Page'), //Home 
     Text('Roster page'), //Roster 
     Column(
@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
       children: <Widget>[
         Text(
           'user info here'//appState.user.displayName 
+          //appState.toString() 
         ), 
         //(image_url != null) ? Image.network(image_url) : null, 
         FlatButton(
@@ -89,7 +90,8 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true, 
       ), //appBar 
       body: Center(
-        child: _pages.elementAt(_selectedIndex), 
+          //child: _pages.elementAt(_selectedIndex), 
+          child: Text(appState.toString()) 
         ), 
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavItems(),  
