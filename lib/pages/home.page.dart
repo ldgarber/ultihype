@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter_login/flutter_twitter_login.dart'; 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ultihype/main.dart';
 import 'package:ultihype/app_state_container.dart'; 
 import 'package:ultihype/models/app_state.dart'; 
@@ -15,16 +13,9 @@ class _HomePageState extends State<HomePage> {
   AppState appState; 
 
   //state variables
-  //FirebaseAuth _auth = FirebaseAuth.instance; 
   int _selectedIndex = 0;
 
   bool notNull(Object o) => o != null;
-
-  //void _signOut() async {
-  //  _auth.signOut().then((response) {
-  //    Navigator.of(context).pushReplacementNamed('/login'); 
-  //  });  
-  //} 
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,22 +31,6 @@ class _HomePageState extends State<HomePage> {
     ]; 
   } 
 
-  Widget get _pageToDisplay {
-    if (appState.isLoading) {
-      return _loadingView; 
-    } else if (!appState.isLoading && appState.user == null) {
-      return new LoginPage();  
-    } else {
-      return _homeView; 
-    } 
-  } 
-
-  Widget get _testAuthView {
-    return new Center(
-        child: Text("login"),  
-        ); 
-  } 
-
   Widget get _loadingView {
     return new Center(
         child: new CircularProgressIndicator(), 
@@ -63,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   } 
 
   Widget get _homeView {
+    var container = AppStateContainer.of(context); 
 
     var _pages = [
       Text('Home Page'), //Home 
@@ -77,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           FlatButton(
             child: const Text('Sign out'),
             onPressed: () async {
-            //  await _signOut();
+              container.signOut(); 
             },
           )
         ] //.where(notNull).toList(), 
@@ -98,13 +74,28 @@ class _HomePageState extends State<HomePage> {
         onTap: _onItemTapped,
       ), //bottomNavigationBar
     ); 
-  } 
+  } //_homeView
+
+  Widget get _pageToDisplay {
+    if (appState.isLoading) {
+      return _loadingView; 
+    } else if (!appState.isLoading && appState.user == null) {
+      return new LoginPage();  
+    } else {
+      return Builder(builder: (context) {
+        return _homeView; 
+      }); 
+    } 
+  } //_pageToDisplay 
 
   @override
   Widget build(BuildContext context) {
     var container = AppStateContainer.of(context); 
     appState = container.state; 
 
-    return _pageToDisplay; 
-  }
-}
+    return new Builder(builder: (context) {
+      return _pageToDisplay; 
+    });  
+  } //build
+
+} 

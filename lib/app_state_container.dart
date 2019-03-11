@@ -86,6 +86,15 @@ class _AppStateContainerState extends State<AppStateContainer> {
     }
   } 
 
+  void signOut() async {
+    FirebaseAuth _auth = FirebaseAuth.instance; 
+    _auth.signOut().then((response) {
+      setState(() { 
+        state.user = null;  
+      }); 
+    });  
+  } 
+
 //  Future<dynamic> _ensureLoggedInOnStartUp() async {
 //    GoogleSignInAccount user = googleSignIn.currentUser;
 //    if (user == null) {
