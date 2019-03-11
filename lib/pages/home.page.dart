@@ -40,27 +40,6 @@ class _HomePageState extends State<HomePage> {
     ]; 
   } 
 
-  var _pages = [
-    Text('Home Page'), //Home 
-    Text('Roster page'), //Roster 
-    Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          'user info here'//appState.user.displayName 
-          //appState.toString() 
-        ), 
-        //(image_url != null) ? Image.network(image_url) : null, 
-        FlatButton(
-          child: const Text('Sign out'),
-          onPressed: () async {
-          //  await _signOut();
-          },
-        )
-      ] //.where(notNull).toList(), 
-    ), //Profile
-  ]; 
-
   Widget get _pageToDisplay {
     if (appState.isLoading) {
       return _loadingView; 
@@ -84,14 +63,34 @@ class _HomePageState extends State<HomePage> {
   } 
 
   Widget get _homeView {
+
+    var _pages = [
+      Text('Home Page'), //Home 
+      Text('Roster page'), //Roster 
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            appState.toString()  
+          ), 
+          //(image_url != null) ? Image.network(image_url) : null, 
+          FlatButton(
+            child: const Text('Sign out'),
+            onPressed: () async {
+            //  await _signOut();
+            },
+          )
+        ] //.where(notNull).toList(), 
+      ), //Profile
+    ]; 
+
     return new Scaffold( 
         appBar: AppBar(
         title: Text("UltiHype"),
         centerTitle: true, 
       ), //appBar 
       body: Center(
-          //child: _pages.elementAt(_selectedIndex), 
-          child: Text(appState.toString()) 
+          child: _pages.elementAt(_selectedIndex), 
         ), 
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavItems(),  
