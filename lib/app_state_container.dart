@@ -68,6 +68,8 @@ class _AppStateContainerState extends State<AppStateContainer> {
 
     try {
       TwitterLoginResult result = await twitterLogin.authorize();
+      setState(() { state.isLoading = true;}); 
+
       var session = result.session;
       final AuthCredential credential = TwitterAuthProvider.getCredential(
         authToken: session.token ?? '', 

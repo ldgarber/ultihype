@@ -79,9 +79,11 @@ class _LoginPageState extends State<LoginPage> {
                     "Sign Up or Sign In", 
                     style: TextStyle(height: 3.0, fontSize: 22), 
                   ), 
-                  TwitterSignInButton(
-                    onPressed: container.logIntoFirebase
-                  )        
+                  appState.isLoading  
+                    ? new CircularProgressIndicator() 
+                    : TwitterSignInButton(
+                      onPressed: container.logIntoFirebase
+                    ),          
                 ]
               )  
             ) //Container
