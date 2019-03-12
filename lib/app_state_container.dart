@@ -33,6 +33,8 @@ class AppStateContainer extends StatefulWidget {
 class _AppStateContainerState extends State<AppStateContainer> {
   AppState state;
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;     
+
   final twitterLogin = new TwitterLogin(
     consumerKey: 'FxTaSf2ZBGlQ0wwi4Mw2nDv57',
     consumerSecret: 'nRMpbnhHCGfdLyp94BVzO47GzKuutcaTKNsDqys53cEzgMxSzO',
@@ -50,8 +52,8 @@ class _AppStateContainerState extends State<AppStateContainer> {
   }
 
   Future initUser() async {
-//  twitterUser = await _ensureLoggedInOnStartUp(); 
-    var twitterUser = null; 
+    var twitterUser = await _auth.currentUser(); 
+    debugPrint('twitterUser: $twitterUser'); 
     if (twitterUser == null) {
       setState(() {
         state.isLoading = false; 
@@ -63,10 +65,8 @@ class _AppStateContainerState extends State<AppStateContainer> {
   
   logIntoFirebase() async {
     FirebaseUser firebaseUser; 
-    FirebaseAuth _auth = FirebaseAuth.instance;     
 
     try {
-      //GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       TwitterLoginResult result = await twitterLogin.authorize();
       var session = result.session;
       final AuthCredential credential = TwitterAuthProvider.getCredential(
@@ -86,23 +86,19 @@ class _AppStateContainerState extends State<AppStateContainer> {
     }
   } 
 
+  void setIntroViewsToSeen() { 
+    setState(() {
+      state.didSeeIntroViews = true; 
+    }); 
+  } 
+
   void signOut() async {
-    FirebaseAuth _auth = FirebaseAuth.instance; 
     _auth.signOut().then((response) {
       setState(() { 
         state.user = null;  
       }); 
     });  
   } 
-
-//  Future<dynamic> _ensureLoggedInOnStartUp() async {
-//    GoogleSignInAccount user = googleSignIn.currentUser;
-//    if (user == null) {
-//      user = await googleSignIn.signInSilently();
-//    }
-//    googleUser = user;
-//    return user;
-//  }
 
   @override
   Widget build(BuildContext context) {

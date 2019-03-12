@@ -3,11 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AppState {
   bool isLoading; 
+  bool didSeeIntroViews;  
   FirebaseUser user; 
 
   //Constructor
   AppState({ 
     this.isLoading = false, 
+    this.didSeeIntroViews = false, 
     this.user, 
   }); 
 
