@@ -39,17 +39,24 @@ class _HomePageState extends State<HomePage> {
 
   Widget get _homeView {
     var container = AppStateContainer.of(context); 
+    var user = appState.user; 
 
     var _pages = [
       Text('Home Page'), //Home 
-      Text('Roster page'), //Roster 
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center, 
+        children: <Widget>[
+          Text('Roster page'), 
+          Text(user.displayName), 
+        ] 
+      ), //Roster
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
             appState.toString()  
           ), 
-          //(image_url != null) ? Image.network(image_url) : null, 
+          (user.photoUrl != null) ? Image.network(user.photoUrl) : null, 
           FlatButton(
             child: const Text('Sign out'),
             onPressed: () async {
