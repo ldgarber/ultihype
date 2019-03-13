@@ -110,9 +110,9 @@ class _AppStateContainerState extends State<AppStateContainer> {
     });  
   } 
 
-  Future<void> addTeam() async {
+  Future<void> addTeam(String team_name) async {
     await teams.add(<String, String>{
-      'team_name': 'Hello, world!', 
+      'team_name': team_name, 
       'uid': state.user.uid, 
     }); 
   } 
@@ -122,13 +122,18 @@ class _AppStateContainerState extends State<AppStateContainer> {
       stream: teams.where("uid", isEqualTo: state.user.uid).snapshots(), 
       builder: (BuildContext context, 
                 AsyncSnapshot<QuerySnapshot> snapshot) {
-        return new ListView(
-            children: snapshot.data.documents.map((doc) => 
-              new Text(doc['team_name'])
-            ).toList()
-          ); 
-      }
-    ); 
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return new Center(child: new CircularProgressIndicator());
+          default:
+            return new ListView(
+                children: snapshot.data.documents.map((doc) => 
+                  new Text(doc['team_name'])
+                ).toList()
+              ); 
+        } //switch
+      } //builder
+    ); //StreamBuilder
   } 
 
   @override

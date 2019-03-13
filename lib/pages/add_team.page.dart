@@ -11,6 +11,13 @@ class AddTeamPage extends StatefulWidget {
 
 class _AddTeamPageState extends State<AddTeamPage> {
   AppState appState; 
+  final teamNameController = TextEditingController(); 
+
+  @override 
+  void dispose() {
+    teamNameController.dispose(); 
+    super.dispose(); 
+  }
 
   Widget get _addTeamView {
     var container = AppStateContainer.of(context); 
@@ -24,13 +31,17 @@ class _AddTeamPageState extends State<AddTeamPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, 
             children: <Widget>[
-              FlatButton (
+              Text("Team Name:"), 
+              TextField(
+                controller: teamNameController, 
+              ), 
+              RaisedButton (
                 child: const Text('Add Team'), 
                 onPressed: () async {
-                  container.addTeam();   
+                  container.addTeam(teamNameController.text);   
                 }), 
               Text("Teams"), 
-              new Expanded(
+                new Expanded(
                 child: container.getTeamNames()  
               ) 
             ] 
