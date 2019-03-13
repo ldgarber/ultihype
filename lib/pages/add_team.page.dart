@@ -51,6 +51,8 @@ class _AddTeamPageState extends State<AddTeamPage> {
                 child: const Text('Save'), 
                 onPressed: () async {
                   container.addTeam(teamNameController.text);   
+                  container.setOnboardedToTrue(); 
+                  Navigator.of(context).pushReplacementNamed("/"); 
                 }), 
               Text("Teams"), 
                 new Expanded(

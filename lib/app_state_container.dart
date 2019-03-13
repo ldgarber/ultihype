@@ -117,6 +117,12 @@ class _AppStateContainerState extends State<AppStateContainer> {
     }); 
   } 
 
+  void setOnboardedToTrue() {
+    setState(() {
+      state.onboarded = true; 
+    }); 
+  } 
+
   StreamBuilder<QuerySnapshot> getTeamNames() {
     return StreamBuilder<QuerySnapshot>(
       stream: teams.where("uid", isEqualTo: state.user.uid).snapshots(), 

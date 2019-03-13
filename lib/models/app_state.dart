@@ -4,15 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AppState {
   bool isLoading; 
   bool didSeeIntroViews;  
+  bool onboarded; 
   FirebaseUser user; 
-  String activeTeam; 
 
   //Constructor
   AppState({ 
     this.isLoading = false, 
     this.didSeeIntroViews = false, 
+    this.onboarded = false, 
     this.user, 
-    this.activeTeam = null, 
   }); 
 
   // A constructor for when the app is loading
