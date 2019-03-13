@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; 
 import 'package:flutter_twitter_login/flutter_twitter_login.dart'; 
 import 'package:flutter/foundation.dart'; 
 import 'dart:async'; 
@@ -34,6 +35,9 @@ class _AppStateContainerState extends State<AppStateContainer> {
   AppState state;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;     
+  final Firestore firestore = Firestore.instance; 
+  CollectionReference get teams => firestore.collection('teams'); 
+
 
   final twitterLogin = new TwitterLogin(
     consumerKey: 'FxTaSf2ZBGlQ0wwi4Mw2nDv57',
@@ -53,7 +57,6 @@ class _AppStateContainerState extends State<AppStateContainer> {
 
   Future initUser() async {
     var twitterUser = await _auth.currentUser(); 
-    debugPrint('twitterUser: $twitterUser'); 
     if (twitterUser == null) {
       setState(() {
         state.isLoading = false; 
@@ -100,6 +103,13 @@ class _AppStateContainerState extends State<AppStateContainer> {
         state.user = null;  
       }); 
     });  
+  } 
+
+  Future<void> addTeam() async {
+    await teams.add(<String, String>{
+      'team_name': 'Hello, world!', 
+      'uid': state.user.uid, 
+    }); 
   } 
 
   @override

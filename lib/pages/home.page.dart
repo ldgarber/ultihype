@@ -48,6 +48,13 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Text('Roster page'), 
           Text(user.displayName), 
+          Text(user.uid), 
+          FlatButton (
+            child: const Text('Add Team'), 
+            onPressed: () async {
+              container.addTeam(); 
+            }, 
+          )
         ] 
       ), //Roster
       Column(
