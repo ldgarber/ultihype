@@ -32,11 +32,23 @@ class _AddTeamPageState extends State<AddTeamPage> {
             mainAxisAlignment: MainAxisAlignment.center, 
             children: <Widget>[
               Text("Team Name:"), 
-              TextField(
-                controller: teamNameController, 
+              new Container(
+                width: 250.0, 
+                child: 
+                  TextField(
+                    style: new TextStyle(
+                        fontSize: 16.0, 
+                    ), 
+                    maxLength: 30, 
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), 
+                        hintText: 'Team Name'
+                    ),  
+                  controller: teamNameController, 
+                ), //TextField 
               ), 
               RaisedButton (
-                child: const Text('Add Team'), 
+                child: const Text('Save'), 
                 onPressed: () async {
                   container.addTeam(teamNameController.text);   
                 }), 

@@ -49,12 +49,6 @@ class _HomePageState extends State<HomePage> {
           Text('Roster page'), 
           Text(user.displayName), 
           Text(user.uid), 
-          FlatButton (
-            child: const Text('Add Team'), 
-            onPressed: () {
-              Navigator.of(context).pushNamed('/add_team');  
-            }, 
-          )
         ] 
       ), //Roster
       Column(
@@ -64,6 +58,12 @@ class _HomePageState extends State<HomePage> {
             appState.toString()  
           ), 
           (user.photoUrl != null) ? Image.network(user.photoUrl) : null, 
+          FlatButton (
+            child: const Text('Add Team'), 
+            onPressed: () {
+              Navigator.of(context).pushNamed('/add_team');  
+            }, 
+          ), 
           FlatButton(
             child: const Text('Sign out'),
             onPressed: () async {
