@@ -117,11 +117,18 @@ class _AppStateContainerState extends State<AppStateContainer> {
     }); 
   } 
 
-  void getTeams() {
-    teams.where("uid", isEqualTo: state.user.uid)
-        .snapshots()
-        .listen((data) => 
-          data.documents.forEach((doc) => debugPrint(doc["team_name"]))); 
+  StreamBuilder<QuerySnapshot> getTeamNames() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: teams.where("uid", isEqualTo: state.user.uid).snapshots(), 
+      builder: (BuildContext context, 
+                AsyncSnapshot<QuerySnapshot> snapshot) {
+        return new ListView(
+            children: snapshot.data.documents.map((doc) => 
+              new Text(doc['team_name'])
+            ).toList()
+          ); 
+      }
+    ); 
   } 
 
   @override

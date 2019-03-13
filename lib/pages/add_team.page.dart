@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ultihype/main.dart'; 
 import 'package:ultihype/app_state_container.dart'; 
 import 'package:ultihype/models/app_state.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart'; 
 
 class AddTeamPage extends StatefulWidget {
   @override
@@ -28,11 +29,10 @@ class _AddTeamPageState extends State<AddTeamPage> {
                 onPressed: () async {
                   container.addTeam();   
                 }), 
-               FlatButton (
-                child: const Text('Debug print teams'), 
-                onPressed: () async {
-                  container.getTeams();   
-                }),    
+              Text("Teams"), 
+              new Expanded(
+                child: container.getTeamNames()  
+              ) 
             ] 
           ), //Column
         ), 
