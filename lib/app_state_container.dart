@@ -38,7 +38,6 @@ class _AppStateContainerState extends State<AppStateContainer> {
   final Firestore firestore = Firestore.instance; 
   CollectionReference get teams => firestore.collection('teams'); 
 
-
   final twitterLogin = new TwitterLogin(
     consumerKey: 'FxTaSf2ZBGlQ0wwi4Mw2nDv57',
     consumerSecret: 'nRMpbnhHCGfdLyp94BVzO47GzKuutcaTKNsDqys53cEzgMxSzO',
@@ -62,7 +61,10 @@ class _AppStateContainerState extends State<AppStateContainer> {
         state.isLoading = false; 
       }); 
     } else {
-      var firebaseUser = await logIntoFirebase(); 
+      var firebaseUser = twitterUser; 
+      setState(() {
+        state.isLoading = false; 
+      }); 
     } 
   } 
   
@@ -87,6 +89,9 @@ class _AppStateContainerState extends State<AppStateContainer> {
       });
     } catch (error) {
       print(error);
+      setState(() {
+        state.isLoading = false; 
+      }); 
       return null;
     }
   } 
@@ -110,6 +115,13 @@ class _AppStateContainerState extends State<AppStateContainer> {
       'team_name': 'Hello, world!', 
       'uid': state.user.uid, 
     }); 
+  } 
+
+  void getTeams() {
+    teams.where("uid", isEqualTo: state.user.uid)
+        .snapshots()
+        .listen((data) => 
+          data.documents.forEach((doc) => debugPrint(doc["team_name"]))); 
   } 
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ultihype/pages/home.page.dart';
 import 'package:ultihype/pages/login.page.dart';
+import 'package:ultihype/pages/add_team.page.dart'; 
 
 class AppRootWidget extends StatefulWidget {
   @override 
@@ -23,7 +24,8 @@ class AppRootWidgetState extends State<AppRootWidget> {
       home: HomePage(),     
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => new HomePage(), 
-        '/login': (BuildContext context) => new LoginPage()
+        '/login': (BuildContext context) => new LoginPage(), 
+        '/add_team': (BuildContext context) => new AddTeamPage(), 
       },  
     ); //Material App
   }

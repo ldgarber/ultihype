@@ -5,12 +5,14 @@ class AppState {
   bool isLoading; 
   bool didSeeIntroViews;  
   FirebaseUser user; 
+  String activeTeamId; 
 
   //Constructor
   AppState({ 
     this.isLoading = false, 
     this.didSeeIntroViews = false, 
     this.user, 
+    this.activeTeamId = null, 
   }); 
 
   // A constructor for when the app is loading

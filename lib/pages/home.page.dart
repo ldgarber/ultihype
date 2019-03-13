@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
           Text(user.uid), 
           FlatButton (
             child: const Text('Add Team'), 
-            onPressed: () async {
-              container.addTeam(); 
+            onPressed: () {
+              Navigator.of(context).pushNamed('/add_team');  
             }, 
           )
         ] 
