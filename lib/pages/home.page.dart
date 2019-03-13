@@ -3,6 +3,7 @@ import 'package:ultihype/main.dart';
 import 'package:ultihype/app_state_container.dart'; 
 import 'package:ultihype/models/app_state.dart'; 
 import 'package:ultihype/pages/login.page.dart'; 
+import 'package:ultihype/pages/onboarding.page.dart'; 
 
 class HomePage extends StatefulWidget {
   @override
@@ -95,6 +96,9 @@ class _HomePageState extends State<HomePage> {
       return _loadingView; 
     } else if (!appState.isLoading && appState.user == null) {
       return new LoginPage();  
+    } else if (appState.activeTeam == null) {
+      //show Create Team onboarding
+      return new OnboardingPage(); 
     } else {
       return Builder(builder: (context) {
         return _homeView; 
