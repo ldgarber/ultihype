@@ -27,11 +27,15 @@ class _AddTeamPageState extends State<AddTeamPage> {
       appBar: AppBar(
         title: Text("Add a Team"),
       ), //appBar 
-      body: Center(
+      body: Container(
+          margin: const EdgeInsets.all(10), 
+          padding: const EdgeInsets.all(10), 
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, 
             children: <Widget>[
-              Text("Team Name:"), 
+              Text("What's your team name?", 
+                  style: TextStyle(fontSize: 18), 
+                  ), 
               new Container(
                 width: 250.0, 
                 child: 
