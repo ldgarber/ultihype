@@ -44,13 +44,13 @@ class _HomePageState extends State<HomePage> {
 
     var _pages = [
       Text('Home Page'), //Home 
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center, 
-        children: <Widget>[
-          Text('Roster page'), 
-          Text(user.displayName), 
-          Text(user.uid), 
-        ] 
+      Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, 
+          children: <Widget>[
+            Text("Roster"), 
+          ] 
+        )
       ), //Roster
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
