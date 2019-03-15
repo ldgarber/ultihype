@@ -36,6 +36,8 @@ class _AppStateContainerState extends State<AppStateContainer> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;     
   final Firestore firestore = Firestore.instance; 
+  CollectionReference get users => firestore.collection('users'); 
+  DocumentReference get userRef => firestore.collection('users').document(state.user.uid);  
   CollectionReference get teams => firestore.collection('teams'); 
 
   final twitterLogin = new TwitterLogin(
@@ -46,7 +48,9 @@ class _AppStateContainerState extends State<AppStateContainer> {
   @override
   void initState() {
     super.initState();
+    //get prev state if it exists
     if (widget.state != null) {
+      debugPrint("setting state from prev state"); 
       state = widget.state; 
     } else {
       state = new AppState.loading(); 
@@ -55,17 +59,12 @@ class _AppStateContainerState extends State<AppStateContainer> {
   }
 
   Future initUser() async {
-    var twitterUser = await _auth.currentUser(); 
-    if (twitterUser == null) {
+    await _auth.currentUser().then((firebaseUser) => { 
       setState(() {
+        state.user = firebaseUser; 
         state.isLoading = false; 
-      }); 
-    } else {
-      var firebaseUser = twitterUser; 
-      setState(() {
-        state.isLoading = false; 
-      }); 
-    } 
+      }) 
+    });    
   } 
   
   logIntoFirebase() async {
@@ -83,17 +82,36 @@ class _AppStateContainerState extends State<AppStateContainer> {
       firebaseUser = await _auth.signInWithCredential(credential); 
 
       print('Logged in: ${firebaseUser.displayName}');
+
       setState(() {
-        state.isLoading = false;
         state.user = firebaseUser;
       });
+
+      checkIfNewUserAndInit(); 
     } catch (error) {
       print(error);
-      setState(() {
-        state.isLoading = false; 
-      }); 
       return null;
     }
+    setState(() {
+      state.isLoading = false; 
+    }); 
+  } 
+
+  Future<void> checkIfNewUserAndInit() async {
+    userRef.get().then((docData) {
+      if (docData.exists) {
+        debugPrint("user already exists in db"); 
+      } else {
+        initNewFirebaseUser(); 
+      } 
+    }); 
+  } 
+
+  Future<void> initNewFirebaseUser() async {
+    await userRef.setData({
+      'onboarded': false, 
+      'teams': []
+    });  
   } 
 
   void setIntroViewsToSeen() { 
@@ -111,21 +129,30 @@ class _AppStateContainerState extends State<AppStateContainer> {
   } 
 
   Future<void> addTeam(String team_name) async {
-    await teams.add(<String, String>{
-      'team_name': team_name, 
+    teams.add({
+      'name': team_name, 
       'uid': state.user.uid, 
+      'players': [], 
+    })
+    .then((docRef) {
+      debugPrint(docRef.documentID); 
+      userRef.updateData({
+        'teams': FieldValue.arrayUnion([docRef.documentID]),  
+      }); 
     }); 
   } 
 
-  void setOnboardedToTrue() {
+  Future<void> setOnboardedToTrue() async {
+    await userRef.setData({'onboarded': true}); 
     setState(() {
       state.onboarded = true; 
     }); 
+    debugPrint("onboarded? : ${state.onboarded}"); 
   } 
 
   StreamBuilder<QuerySnapshot> getTeamNames() {
     return StreamBuilder<QuerySnapshot>(
-      stream: teams.where("uid", isEqualTo: state.user.uid).snapshots(), 
+      stream: teams.snapshots(), 
       builder: (BuildContext context, 
                 AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
@@ -134,7 +161,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
           default:
             return new ListView(
                 children: snapshot.data.documents.map((doc) => 
-                  new Text(doc['team_name'])
+                  new Text(doc['name'])
                 ).toList()
               ); 
         } //switch

@@ -11,7 +11,7 @@ class AppState {
   AppState({ 
     this.isLoading = false, 
     this.didSeeIntroViews = false, 
-    this.onboarded = false, 
+    this.onboarded = true, 
     this.user, 
   }); 
 
