@@ -33,7 +33,7 @@ class _AddTeamPageState extends State<AddTeamPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, 
             children: <Widget>[
-              Text("What's your team name?", 
+              Text("Team Name:", 
                   style: TextStyle(fontSize: 18), 
                   ), 
               new Container(

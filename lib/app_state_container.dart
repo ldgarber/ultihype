@@ -108,11 +108,13 @@ class _AppStateContainerState extends State<AppStateContainer> {
   } 
 
   Future<void> initNewFirebaseUser() async {
+    setState(() { state.onboarded = false; }); 
     await userRef.setData({
       'onboarded': false, 
-      'teams': []
+      'teams': [], 
+      'activeTeam': '', 
     });  
-  } 
+  }  
 
   void setIntroViewsToSeen() { 
     setState(() {
@@ -137,7 +139,8 @@ class _AppStateContainerState extends State<AppStateContainer> {
     .then((docRef) {
       debugPrint(docRef.documentID); 
       userRef.updateData({
-        'teams': FieldValue.arrayUnion([docRef.documentID]),  
+        //add team to array of teams on userRef here
+        'activeTeam': docRef.documentID, 
       }); 
     }); 
   } 

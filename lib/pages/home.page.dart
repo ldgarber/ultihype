@@ -3,7 +3,7 @@ import 'package:ultihype/main.dart';
 import 'package:ultihype/app_state_container.dart'; 
 import 'package:ultihype/models/app_state.dart'; 
 import 'package:ultihype/pages/login.page.dart'; 
-import 'package:ultihype/pages/add_team.page.dart'; 
+import 'package:ultihype/pages/onboard_add_team.page.dart'; 
 
 class HomePage extends StatefulWidget {
   @override
@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
         onTap: _onItemTapped,
       ), //bottomNavigationBar
       ) //scaffold 
-    : new AddTeamPage(); 
+    : new OnboardAddTeamPage(); 
   } //_homeView
 
   Widget get _pageToDisplay {
