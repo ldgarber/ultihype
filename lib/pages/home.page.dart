@@ -65,16 +65,16 @@ class _HomePageState extends State<HomePage> {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            appState.toString()  
-          ), 
           (user.photoUrl != null) ? Image.network(user.photoUrl) : null, 
-          FlatButton (
-            child: const Text('Add Team'), 
-            onPressed: () {
-              Navigator.of(context).pushNamed('/add_team');  
-            }, 
+          Text(
+            appState.user.displayName,   
           ), 
+          //FlatButton (
+          //  child: const Text('Add Team'), 
+          //  onPressed: () {
+          //    Navigator.of(context).pushNamed('/add_team');  
+          //  }, 
+          //), 
           FlatButton(
             child: const Text('Sign out'),
             onPressed: () async {
