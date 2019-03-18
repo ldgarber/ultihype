@@ -4,6 +4,7 @@ import 'package:ultihype/app_state_container.dart';
 import 'package:ultihype/models/app_state.dart'; 
 import 'package:ultihype/pages/login.page.dart'; 
 import 'package:ultihype/pages/onboard_add_team.page.dart'; 
+import 'package:ultihype/pages/roster.page.dart'; 
 
 class HomePage extends StatefulWidget {
   @override
@@ -41,17 +42,25 @@ class _HomePageState extends State<HomePage> {
   Widget get _homeView {
     var container = AppStateContainer.of(context); 
     var user = appState.user; 
+    var team = appState.activeTeam; 
 
     var _pages = [
-      Text('Home Page'), //Home 
       Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, 
           children: <Widget>[
-            Text("Roster"), 
-          ] 
+            Text('Home Page'), //Home 
+            Text(team), 
+          //FlatButton (
+          //  child: const Text('Set active'), 
+          //  onPressed: () {
+          //    container.setActiveTeam('test'); 
+          //  }, 
+          //), 
+
+          ]
         )
-      ), //Roster
+      ), //Home
+      new RosterPage(), //Roster tab 
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

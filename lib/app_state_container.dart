@@ -37,8 +37,11 @@ class _AppStateContainerState extends State<AppStateContainer> {
   final FirebaseAuth _auth = FirebaseAuth.instance;     
   final Firestore firestore = Firestore.instance; 
   CollectionReference get users => firestore.collection('users'); 
-  DocumentReference get userRef => firestore.collection('users').document(state.user.uid);  
   CollectionReference get teams => firestore.collection('teams'); 
+  CollectionReference get players => firestore.collection('players'); 
+
+  DocumentReference get userRef => users.document(state.user.uid);  
+  DocumentReference get activeTeamRef => teams.document(state.activeTeam); 
 
   final twitterLogin = new TwitterLogin(
     consumerKey: 'FxTaSf2ZBGlQ0wwi4Mw2nDv57',
@@ -55,6 +58,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
     } else {
       state = new AppState.loading(); 
       initUser(); 
+      initActiveTeam(); 
     } 
   }
 
@@ -65,6 +69,12 @@ class _AppStateContainerState extends State<AppStateContainer> {
         state.isLoading = false; 
       }) 
     });    
+  } 
+
+  Future<void> initActiveTeam() async {
+    userRef.get().then((docData) {
+      state.activeTeam = docData['activeTeam']; 
+    });  
   } 
   
   logIntoFirebase() async {
@@ -100,7 +110,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
   Future<void> checkIfNewUserAndInit() async {
     userRef.get().then((docData) {
       if (docData.exists) {
-        debugPrint("user already exists in db"); 
+        this.initActiveTeam(); 
       } else {
         initNewFirebaseUser(); 
       } 
@@ -129,6 +139,18 @@ class _AppStateContainerState extends State<AppStateContainer> {
       }); 
     });  
   } 
+  
+  void setActiveTeam(teamId) {
+    // debug - var teamId = '-La1b3QrvuZgcfMBbB6P';  
+    debugPrint(teamId); 
+    userRef.updateData({
+      //add team to array of teams on userRef here
+      'activeTeam': teamId, 
+    }); 
+    setState(() => {
+      state.activeTeam = teamId,  
+    }); 
+  } 
 
   Future<void> addTeam(String team_name) async {
     teams.add({
@@ -137,11 +159,15 @@ class _AppStateContainerState extends State<AppStateContainer> {
       'players': [], 
     })
     .then((docRef) {
-      debugPrint(docRef.documentID); 
-      userRef.updateData({
-        //add team to array of teams on userRef here
-        'activeTeam': docRef.documentID, 
-      }); 
+      //need to add documentID to users teams array also
+      setActiveTeam(docRef.documentID); 
+    }); 
+  } 
+
+  Future<void> addPlayer(String name) async {
+    players.add({
+      'name': name, 
+      'team': state.activeTeam, 
     }); 
   } 
 
