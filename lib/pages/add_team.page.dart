@@ -59,14 +59,38 @@ class _AddTeamPageState extends State<AddTeamPage> {
                   Navigator.of(context).pushReplacementNamed("/"); 
                 }), 
               Text("Teams"), 
-                new Expanded(
-                child: container.getTeamNames()  
+              new Expanded(
+                child: Builder(builder: (context) {
+                  return _showTeams;  
+                })  
               ) 
             ] 
           ), //Column
         ), 
     ); //Scaffold 
   } //_addTeamView
+
+  Widget get _showTeams {
+    var container = AppStateContainer.of(context); 
+    appState = container.state; 
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: container.teams.snapshots(), 
+      builder: (BuildContext context, 
+                AsyncSnapshot<QuerySnapshot> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return new Center(child: new CircularProgressIndicator());
+          default:
+            return new ListView(
+                children: snapshot.data.documents.map((doc) => 
+                  new Text(doc['name'])
+                ).toList()
+              ); 
+        } //switch
+      } //builder
+    ); //StreamBuilder
+  } 
 
   @override
   Widget build(BuildContext context) {
