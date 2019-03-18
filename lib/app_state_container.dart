@@ -77,6 +77,9 @@ class _AppStateContainerState extends State<AppStateContainer> {
     userRef.get().then((docData) {
       state.activeTeam = docData['activeTeam']; 
     });  
+    activeTeamRef.get().then((docData) {
+      state.activeTeamName = docData["name"]; 
+    }); 
   } 
   
   logIntoFirebase() async {
@@ -112,7 +115,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
   Future<void> checkIfNewUserAndInit() async {
     userRef.get().then((docData) {
       if (docData.exists) {
-        this.initActiveTeam(); 
+        initActiveTeam(); 
       } else {
         initNewFirebaseUser(); 
       } 
@@ -144,7 +147,6 @@ class _AppStateContainerState extends State<AppStateContainer> {
   
   void setActiveTeam(teamId, team_name) {
     // debug - var teamId = '-La1b3QrvuZgcfMBbB6P';  
-    debugPrint(teamId); 
     userRef.updateData({
       //add team to array of teams on userRef here
       'activeTeam': teamId, 
