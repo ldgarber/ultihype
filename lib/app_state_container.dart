@@ -57,8 +57,9 @@ class _AppStateContainerState extends State<AppStateContainer> {
       state = widget.state; 
     } else {
       state = new AppState.loading(); 
-      initUser(); 
-      initActiveTeam(); 
+      initUser().then((_) {
+        initActiveTeam(); 
+      }); 
     } 
   }
 
@@ -67,8 +68,9 @@ class _AppStateContainerState extends State<AppStateContainer> {
       setState(() {
         state.user = firebaseUser; 
         state.isLoading = false; 
-      }) 
-    });    
+      })  
+    });     
+    return; 
   } 
 
   Future<void> initActiveTeam() async {
@@ -140,7 +142,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
     });  
   } 
   
-  void setActiveTeam(teamId) {
+  void setActiveTeam(teamId, team_name) {
     // debug - var teamId = '-La1b3QrvuZgcfMBbB6P';  
     debugPrint(teamId); 
     userRef.updateData({
@@ -149,6 +151,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
     }); 
     setState(() => {
       state.activeTeam = teamId,  
+      state.activeTeamName = team_name, 
     }); 
   } 
 
@@ -160,7 +163,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
     })
     .then((docRef) {
       //need to add documentID to users teams array also
-      setActiveTeam(docRef.documentID); 
+      setActiveTeam(docRef.documentID, team_name); 
     }); 
   } 
 
@@ -168,7 +171,14 @@ class _AppStateContainerState extends State<AppStateContainer> {
     players.add({
       'name': name, 
       'team': state.activeTeam, 
+      'uid': state.user.uid
     }); 
+  } 
+
+  Future<String> getActiveTeamName() async {
+    activeTeamRef.get().then((data) { 
+      return data['name']; 
+    });  
   } 
 
   Future<void> setOnboardedToTrue() async {

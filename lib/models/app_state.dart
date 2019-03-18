@@ -6,6 +6,7 @@ class AppState {
   bool didSeeIntroViews;  
   bool onboarded; 
   String activeTeam; 
+  String activeTeamName; 
   FirebaseUser user; 
 
   //Constructor
@@ -15,6 +16,7 @@ class AppState {
     this.onboarded = true, 
     this.user, 
     this.activeTeam = '', 
+    this.activeTeamName = '', 
   }); 
 
   // A constructor for when the app is loading

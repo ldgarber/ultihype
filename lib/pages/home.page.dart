@@ -43,17 +43,18 @@ class _HomePageState extends State<HomePage> {
     var container = AppStateContainer.of(context); 
     var user = appState.user; 
     var team = appState.activeTeam; 
+    var teamName = appState.activeTeamName; 
 
     var _pages = [
       Container(
         child: Column(
           children: <Widget>[
             Text('Home Page'), //Home 
-            Text(team), 
+            Text(teamName), 
           //FlatButton (
           //  child: const Text('Set active'), 
           //  onPressed: () {
-          //    container.setActiveTeam('test'); 
+          //    container.setActiveTeam('-LaGRiHwMgwVZmEmN79S', "BKBC"); 
           //  }, 
           //), 
 
