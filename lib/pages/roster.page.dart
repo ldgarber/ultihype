@@ -26,23 +26,26 @@ class _RosterPageState extends State<RosterPage> {
     var container = AppStateContainer.of(context); 
     var user = appState.user; 
     var team = appState.activeTeam;  
+    var teamName = appState.activeTeamName;  
 
-    return new Column(
-      children: <Widget>[
-        Text("${team} Roster"), 
-        new Expanded(
-          child: Builder(builder: (context) {
-            return _showPlayers;  
-          })  
-        ),  
-        FloatingActionButton(
+    return new Scaffold(
+        body: Column(
+          children: <Widget>[
+            Text("${teamName} Roster"), 
+            new Expanded(
+              child: Builder(builder: (context) {
+                return _showPlayers;  
+              })  
+            ),  
+          ], 
+        ), //Column
+        floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add), 
           onPressed: () async {
             Navigator.of(context).pushNamed("/add_player"); 
           }
-        ) 
-      ]
-    ); 
+        )  
+    ); //Scaffold 
   } // _rosterView 
 
   Widget get _showPlayers {
