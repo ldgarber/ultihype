@@ -62,7 +62,9 @@ class _RosterPageState extends State<RosterPage> {
           default:
             return new ListView(
                 children: snapshot.data.documents.map((doc) => 
-                  new Text(doc['name'])
+                  new ListTile(
+                      title: new Text(doc['name']), 
+                    ) 
                 ).toList()
               ); 
         } //switch

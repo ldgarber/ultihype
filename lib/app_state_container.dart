@@ -77,7 +77,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
     userRef.get().then((docData) {
       if (docData.exists) {
         setState(() {
-          state.activeTeam = docData['activeTeam'] 
+          state.activeTeam = docData['activeTeam'];  
         }); 
       }  
     });  
