@@ -63,7 +63,20 @@ class _RosterPageState extends State<RosterPage> {
             return new ListView(
                 children: snapshot.data.documents.map((doc) => 
                   new ListTile(
-                      title: new Text(doc['name']), 
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0), 
+                      leading: Container(
+                          padding: EdgeInsets.only(right: 12.0), 
+                          decoration: new BoxDecoration(
+                              border: new Border(
+                                  right: new BorderSide(width: 1.0))), 
+                          child: Icon(Icons.brightness_5, color: Colors.black), 
+                      ), 
+                      title: Text(
+                          doc['name'], 
+                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),  
+                      ), 
+                      //subtitle
+                      //trailing
                     ) 
                 ).toList()
               ); 
