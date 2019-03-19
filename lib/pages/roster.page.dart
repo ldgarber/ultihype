@@ -86,7 +86,10 @@ class _RosterPageState extends State<RosterPage> {
                         ), 
                         title: Text(
                             '${doc['firstName']} ${nickname} ${doc['lastName']}', 
-                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),  
+                            style: TextStyle(
+                                color: Colors.black, 
+                                fontSize: 22, 
+                                fontWeight: FontWeight.bold),  
                         ), 
                         subtitle: Row(
                           children: <Widget>[
