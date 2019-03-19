@@ -60,26 +60,50 @@ class _RosterPageState extends State<RosterPage> {
           case ConnectionState.waiting:
             return new Center(child: new CircularProgressIndicator());
           default:
-            return new ListView(
-                children: snapshot.data.documents.map((doc) => 
-                  new ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0), 
-                      leading: Container(
-                          padding: EdgeInsets.only(right: 12.0), 
-                          decoration: new BoxDecoration(
-                              border: new Border(
-                                  right: new BorderSide(width: 1.0))), 
-                          child: Icon(Icons.brightness_5, color: Colors.black), 
-                      ), 
-                      title: Text(
-                          doc['name'], 
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),  
-                      ), 
-                      //subtitle
-                      //trailing
-                    ) 
-                ).toList()
-              ); 
+            var rosterList = snapshot.data.documents.map((doc) => doc).toList(); 
+            return new ListView.builder(
+                itemCount: rosterList.length, 
+                itemBuilder: (context, position) {
+                  var doc = rosterList[position]; 
+                  var nickname = doc['nickname'] == null ? '' : '"${doc['nickname']}"'; 
+                  return Card(
+                    elevation: 8.0,
+                    margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                    color: Colors.transparent, 
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 155, 226, 255), 
+                          borderRadius: BorderRadius.all(const Radius.circular(8.0)),  
+                          ),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0), 
+                        leading: Container(
+                            padding: EdgeInsets.only(right: 12.0), 
+                            decoration: new BoxDecoration(
+                                border: new Border(
+                                    right: new BorderSide(width: 1.0))), 
+                            child: Icon(Icons.directions_run, color: Colors.black), 
+                        ), 
+                        title: Text(
+                            '${doc['firstName']} ${nickname} ${doc['lastName']}', 
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),  
+                        ), 
+                        subtitle: Row(
+                          children: <Widget>[
+                            Text(
+                                doc['height'] ?? ''), 
+                            //vertical dividing line here
+                            Text(
+                                doc['position'] ?? ''), 
+                          ],
+                        ),
+                        trailing:
+                            Text(doc['number'] != null ? "#${doc['number']}" : '', 
+                                style: TextStyle(color: Colors.blue, fontSize: 30.0)), 
+                      ) //ListTile
+                  )); //Container / Card
+            } //itemBuilder
+          ); //ListView.builder 
         } //switch
       } //builder
     ); //StreamBuilder
