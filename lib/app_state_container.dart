@@ -75,8 +75,13 @@ class _AppStateContainerState extends State<AppStateContainer> {
 
   Future<void> initActiveTeam() async {
     userRef.get().then((docData) {
-      state.activeTeam = docData['activeTeam']; 
+      if (docData.exists) {
+        setState(() {
+          state.activeTeam = docData['activeTeam'];  
+        }); 
+      }  
     });  
+    debugPrint("Active team: ${state.activeTeam}"); 
   } 
   
   logIntoFirebase() async {
@@ -112,7 +117,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
   Future<void> checkIfNewUserAndInit() async {
     userRef.get().then((docData) {
       if (docData.exists) {
-        this.initActiveTeam(); 
+        initActiveTeam(); 
       } else {
         initNewFirebaseUser(); 
       } 
@@ -142,17 +147,15 @@ class _AppStateContainerState extends State<AppStateContainer> {
     });  
   } 
   
-  void setActiveTeam(teamId, team_name) {
-    // debug - var teamId = '-La1b3QrvuZgcfMBbB6P';  
-    debugPrint(teamId); 
+  void setActiveTeam(teamId) {
     userRef.updateData({
       //add team to array of teams on userRef here
       'activeTeam': teamId, 
     }); 
     setState(() => {
       state.activeTeam = teamId,  
-      state.activeTeamName = team_name, 
     }); 
+    debugPrint("active team: ${state.activeTeam}"); 
   } 
 
   Future<void> addTeam(String team_name) async {
@@ -163,7 +166,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
     })
     .then((docRef) {
       //need to add documentID to users teams array also
-      setActiveTeam(docRef.documentID, team_name); 
+      setActiveTeam(docRef.documentID); 
     }); 
   } 
 

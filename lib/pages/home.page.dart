@@ -43,20 +43,19 @@ class _HomePageState extends State<HomePage> {
     var container = AppStateContainer.of(context); 
     var user = appState.user; 
     var team = appState.activeTeam; 
-    var teamName = appState.activeTeamName; 
 
     var _pages = [
       Container(
         child: Column(
           children: <Widget>[
             Text('Home Page'), //Home 
-            Text(teamName), 
-          //FlatButton (
-          //  child: const Text('Set active'), 
-          //  onPressed: () {
-          //    container.setActiveTeam('-LaGRiHwMgwVZmEmN79S', "BKBC"); 
-          //  }, 
-          //), 
+            Text(team), 
+          FlatButton (
+            child: const Text('Set active'), 
+            onPressed: () {
+              container.setActiveTeam('-LaGRiHwMgwVZmEmN79S'); 
+            }, 
+          ), 
 
           ]
         )
@@ -65,16 +64,16 @@ class _HomePageState extends State<HomePage> {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            appState.toString()  
-          ), 
           (user.photoUrl != null) ? Image.network(user.photoUrl) : null, 
-          FlatButton (
-            child: const Text('Add Team'), 
-            onPressed: () {
-              Navigator.of(context).pushNamed('/add_team');  
-            }, 
+          Text(
+            appState.user.displayName,   
           ), 
+          //FlatButton (
+          //  child: const Text('Add Team'), 
+          //  onPressed: () {
+          //    Navigator.of(context).pushNamed('/add_team');  
+          //  }, 
+          //), 
           FlatButton(
             child: const Text('Sign out'),
             onPressed: () async {
