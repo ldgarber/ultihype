@@ -44,44 +44,114 @@ class _AddPlayerPageState extends State<AddPlayerPage> {
     var user = appState.user; 
     var team = appState.activeTeam;  
 
-
-    final nameController = TextEditingController(); 
+    final firstNameController = TextEditingController(); 
+    final lastNameController = TextEditingController(); 
+    final nicknameController = TextEditingController(); 
+    final heightController = TextEditingController(); 
+    final numberController = TextEditingController(); 
 
     @override 
     void dispose() {
-      nameController.dispose(); 
+      firstNameController.dispose(); 
+      lastNameController.dispose(); 
+      nicknameController.dispose(); 
+      heightController.dispose(); 
+      numberController.dispose(); 
+
       super.dispose(); 
     }
 
-    return Column(
+    return Center(
+        child: Container(
+            width: 250, 
+            child: Column( 
               mainAxisAlignment: MainAxisAlignment.center, 
+              crossAxisAlignment: CrossAxisAlignment.start, 
               children: <Widget>[
-                Text("Name:", 
+                Text("First Name:", 
                     style: TextStyle(fontSize: 18), 
                     ), 
-                new Container(
-                  width: 250.0, 
-                  child: 
-                    TextField(
-                      style: new TextStyle(
-                          fontSize: 16.0, 
-                      ), 
-                      maxLength: 30, 
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(), 
-                          hintText: 'First Name'
-                      ),  
-                    controller: nameController, 
-                  ), //TextField 
-                ), 
+                TextField(
+                  style: new TextStyle(
+                      fontSize: 16.0, 
+                  ), 
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), 
+                      hintText: 'First Name'
+                  ),  
+                  controller: firstNameController, 
+                  onChanged: (v) => firstNameController.text = v, 
+                ), //TextField 
+                Text("Last Name:", 
+                    style: TextStyle(fontSize: 18), 
+                    ), 
+                TextField(
+                  style: new TextStyle(
+                      fontSize: 16.0, 
+                  ), 
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), 
+                      hintText: 'Last Name'
+                  ),  
+                  controller: lastNameController, 
+                ), //TextField 
+                Text("Nickname: (optional)", 
+                    style: TextStyle(fontSize: 18), 
+                    ), 
+                TextField(
+                  style: new TextStyle(
+                      fontSize: 16.0, 
+                  ), 
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), 
+                      hintText: 'Nickname'
+                  ),  
+                  controller: nicknameController, 
+                ), //TextField 
+
+                Text("Number: (optional)", 
+                    style: TextStyle(fontSize: 18), 
+                    ), 
+                TextField(
+                  style: new TextStyle(
+                      fontSize: 16.0, 
+                  ), 
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), 
+                      hintText: 'Number'
+                  ),  
+                  controller: numberController, 
+                ), //TextField 
+                Text("Height: (optional)", 
+                    style: TextStyle(fontSize: 18), 
+                    ), 
+                TextField(
+                  style: new TextStyle(
+                      fontSize: 16.0, 
+                  ), 
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), 
+                      hintText: 'Height'
+                  ),  
+                  controller: heightController, 
+                ), //TextField 
+
                 RaisedButton (
                   child: const Text('Save'), 
                   onPressed: () async {
-                    container.addPlayer(nameController.text);   
+                    container.addPlayer({
+                      "firstName": firstNameController.text, 
+                      "lastName": lastNameController.text, 
+                      "nickname": nicknameController.text, 
+                      "height": heightController.text, 
+                      "number": numberController.text
+                    });   
                     Navigator.of(context).pop(); 
                   }), 
               ] 
-            ); //Column
+              ) //Column
+            ) //Container
+          ); // Center
   } //_addPlayerView
 
 }

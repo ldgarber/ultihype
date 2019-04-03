@@ -170,9 +170,12 @@ class _AppStateContainerState extends State<AppStateContainer> {
     }); 
   } 
 
-  Future<void> addPlayer(String name) async {
+  Future<void> addPlayer(Map player) async {
     players.add({
-      'firstName': name, 
+      'firstName': player['firstName'], 
+      'lastName': player['lastName'], 
+      'height': player['height'], 
+      'number': player['number'], 
       'team': state.activeTeam, 
       'uid': state.user.uid
     }); 
