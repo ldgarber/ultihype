@@ -53,7 +53,7 @@ class _RosterPageState extends State<RosterPage> {
     appState = container.state; 
 
     return StreamBuilder<QuerySnapshot>(
-      stream: container.players.where('team', isEqualTo: appState.activeTeam).snapshots(), 
+      stream: container.players.where('team', isEqualTo: appState.activeTeam).orderBy("number").snapshots(), 
       builder: (BuildContext context, 
                 AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
