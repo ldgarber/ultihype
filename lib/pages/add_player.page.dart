@@ -13,6 +13,12 @@ class AddPlayerPage extends StatefulWidget {
 class _AddPlayerPageState extends State<AddPlayerPage> {
   AppState appState; 
 
+  final firstNameController = TextEditingController(); 
+  final lastNameController = TextEditingController(); 
+  final nicknameController = TextEditingController(); 
+  final heightController = TextEditingController(); 
+  final numberController = TextEditingController(); 
+
   @override
   Widget build(BuildContext context) {
     var container = AppStateContainer.of(context); 
@@ -44,12 +50,6 @@ class _AddPlayerPageState extends State<AddPlayerPage> {
     var user = appState.user; 
     var team = appState.activeTeam;  
 
-    final firstNameController = TextEditingController(); 
-    final lastNameController = TextEditingController(); 
-    final nicknameController = TextEditingController(); 
-    final heightController = TextEditingController(); 
-    final numberController = TextEditingController(); 
-
     @override 
     void dispose() {
       firstNameController.dispose(); 
@@ -77,10 +77,9 @@ class _AddPlayerPageState extends State<AddPlayerPage> {
                   ), 
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), 
-                      hintText: 'First Name'
+                      hintText: 'First Name', 
                   ),  
                   controller: firstNameController, 
-                  onChanged: (v) => firstNameController.text = v, 
                 ), //TextField 
                 Text("Last Name:", 
                     style: TextStyle(fontSize: 18), 
@@ -120,6 +119,7 @@ class _AddPlayerPageState extends State<AddPlayerPage> {
                       border: OutlineInputBorder(), 
                       hintText: 'Number'
                   ),  
+                  keyboardType: TextInputType.number, 
                   controller: numberController, 
                 ), //TextField 
                 Text("Height: (optional)", 
