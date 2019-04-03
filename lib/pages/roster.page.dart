@@ -53,7 +53,7 @@ class _RosterPageState extends State<RosterPage> {
     appState = container.state; 
 
     return StreamBuilder<QuerySnapshot>(
-      stream: container.players.where('team', isEqualTo: appState.activeTeam).orderBy("number").snapshots(), 
+      stream: container.players.where('team', isEqualTo: appState.activeTeam).orderBy("firstName").snapshots(), 
       builder: (BuildContext context, 
                 AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
@@ -66,7 +66,8 @@ class _RosterPageState extends State<RosterPage> {
                 itemBuilder: (context, position) {
                   var doc = rosterList[position]; 
                   var nickname = doc['nickname'] == null ? '' : '"${doc['nickname']}"'; 
-                  return Card(
+                  var lastName = doc['lastName'] == null ? '' : doc['lastName']; 
+                   return Card(
                     elevation: 8.0,
                     margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
                     color: Colors.transparent, 
@@ -85,7 +86,7 @@ class _RosterPageState extends State<RosterPage> {
                             child: Icon(Icons.directions_run, color: Colors.black), 
                         ), 
                         title: Text(
-                            '${doc['firstName']} ${nickname} ${doc['lastName']}', 
+                            '${doc['firstName']} ${nickname} ${lastName}', 
                             style: TextStyle(
                                 color: Colors.black, 
                                 fontSize: 22, 

@@ -172,10 +172,11 @@ class _AppStateContainerState extends State<AppStateContainer> {
 
   Future<void> addPlayer(String name) async {
     players.add({
-      'name': name, 
+      'firstName': name, 
       'team': state.activeTeam, 
       'uid': state.user.uid
     }); 
+    debugPrint("added player"); 
   } 
 
   Future<String> getActiveTeamName() async {
