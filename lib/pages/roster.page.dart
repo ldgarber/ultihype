@@ -67,6 +67,7 @@ class _RosterPageState extends State<RosterPage> {
                   var doc = rosterList[position]; 
                   var nickname = doc['nickname'] == null ? '' : '"${doc['nickname']}"'; 
                   var lastName = doc['lastName'] == null ? '' : doc['lastName']; 
+                  var number = doc['number'] == null ? '' : doc['number']; 
                    return Card(
                     elevation: 8.0,
                     margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -102,7 +103,7 @@ class _RosterPageState extends State<RosterPage> {
                           ],
                         ),
                         trailing:
-                            Text(doc['number'] != null ? "#${doc['number']}" : '', 
+                            Text(number.isEmpty ? '' : "#${doc['number']}", 
                                 style: TextStyle(color: Colors.blue, fontSize: 30.0)), 
                       ) //ListTile
                   )); //Container / Card
