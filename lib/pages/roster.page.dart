@@ -82,7 +82,7 @@ class _RosterPageState extends State<RosterPage> {
     return new Scaffold(
         body: Column(
           children: <Widget>[
-            Text("${teamName} Roster"), 
+            //Text("${teamName} Roster"), 
             new Expanded(
               child: Builder(builder: (context) {
                 return _showPlayers;  
@@ -99,6 +99,12 @@ class _RosterPageState extends State<RosterPage> {
     ); //Scaffold 
   } // _rosterView 
 
+  Widget get _emptyRosterView {
+    return Center(
+        child: Text("Your roster is empty!")
+        ); 
+  } 
+
   Widget get _showPlayers {
     var container = AppStateContainer.of(context); 
     appState = container.state; 
@@ -113,7 +119,8 @@ class _RosterPageState extends State<RosterPage> {
             return new Center(child: new CircularProgressIndicator());
           default:
             var rosterList = snapshot.data.documents.map((doc) => doc).toList(); 
-            return new ListView.builder(
+            return rosterList.isEmpty ? _emptyRosterView
+                : new ListView.builder(
                 itemCount: rosterList.length, 
                 itemBuilder: (context, position) {
                   final player = rosterList[position]; 
