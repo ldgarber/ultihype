@@ -182,6 +182,14 @@ class _AppStateContainerState extends State<AppStateContainer> {
     debugPrint("added player"); 
   } 
 
+  Future<void> deletePlayer(String player_id) async {
+    try {
+      players.document(player_id).delete(); 
+    } catch (e) {
+      debugPrint(e.toString()); 
+    } 
+  } 
+
   Future<String> getActiveTeamName() async {
     activeTeamRef.get().then((data) { 
       return data['name']; 

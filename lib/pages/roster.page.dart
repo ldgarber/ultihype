@@ -129,13 +129,8 @@ class _RosterPageState extends State<RosterPage> {
                       key: Key(player.documentID), 
                       direction: DismissDirection.endToStart, 
                       onDismissed: (direction) {
-                        //remove the player from the database
-                        // example from the docs: 
-                        // setState(() {
-                        //  rosterList.removeAt(position);  
-                        // }); 
+                        container.deletePlayer(player.documentID); 
                        
-                        //display toast
                         Scaffold
                           .of(context) 
                           .showSnackBar(SnackBar(content:Text("Player deleted"))); 
