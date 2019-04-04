@@ -31,15 +31,16 @@ class _RosterPageState extends State<RosterPage> {
     var number = player['number'] == null ? '' : player['number']; 
 
     return Card(
-      elevation: 8.0,
+      elevation: 4.0, 
       margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
       color: Colors.transparent, 
       child: Container(
         decoration: BoxDecoration(
-            color: Color.fromARGB(255, 155, 226, 255), 
+            color: Colors.white, 
             borderRadius: BorderRadius.all(const Radius.circular(8.0)),  
             ),
         child: ListTile(
+
           contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0), 
           leading: Container(
               padding: EdgeInsets.only(right: 12.0), 
@@ -117,7 +118,28 @@ class _RosterPageState extends State<RosterPage> {
                 itemBuilder: (context, position) {
                   final player = rosterList[position]; 
                   return Dismissible( 
+                      background: Container(
+                          alignment: AlignmentDirectional.centerEnd,
+                          color: Colors.red, 
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0), 
+                            child: Icon(Icons.delete, color: Colors.white,), 
+                          ), 
+                      ), 
                       key: Key(player.documentID), 
+                      direction: DismissDirection.endToStart, 
+                      onDismissed: (direction) {
+                        //remove the player from the database
+                        // example from the docs: 
+                        // setState(() {
+                        //  rosterList.removeAt(position);  
+                        // }); 
+                       
+                        //display toast
+                        Scaffold
+                          .of(context) 
+                          .showSnackBar(SnackBar(content:Text("Player deleted"))); 
+                      }, //onDismissed 
                       child: _playerCard(player),  
                     ); 
                 } //itemBuilder
