@@ -22,14 +22,13 @@ class _RosterPageState extends State<RosterPage> {
     });  
   } //build
 
-  Widget _playerCard(rosterList, position) {
+  Widget _playerCard(player) {
     var container = AppStateContainer.of(context); 
     appState = container.state; 
 
-    var doc = rosterList[position]; 
-    var nickname = doc['nickname'] == null ? '' : '"${doc['nickname']}"'; 
-    var lastName = doc['lastName'] == null ? '' : doc['lastName']; 
-    var number = doc['number'] == null ? '' : doc['number']; 
+    var nickname = player['nickname'] == null ? '' : '"${player['nickname']}"'; 
+    var lastName = player['lastName'] == null ? '' : player['lastName']; 
+    var number = player['number'] == null ? '' : player['number']; 
 
     return Card(
       elevation: 8.0,
@@ -50,7 +49,7 @@ class _RosterPageState extends State<RosterPage> {
               child: Icon(Icons.directions_run, color: Colors.black), 
           ), 
           title: Text(
-              '${doc['firstName']} ${nickname} ${lastName}', 
+              '${player['firstName']} ${nickname} ${lastName}', 
               style: TextStyle(
                   color: Colors.black, 
                   fontSize: 22, 
@@ -59,14 +58,14 @@ class _RosterPageState extends State<RosterPage> {
           subtitle: Row(
             children: <Widget>[
               Text(
-                  doc['height'] ?? ''), 
+                  player['height'] ?? ''), 
               //vertical dividing line here
               Text(
-                  doc['position'] ?? ''), 
+                  player['position'] ?? ''), 
             ],
           ),
           trailing:
-              Text(number.isEmpty ? '' : "#${doc['number']}", 
+              Text(number.isEmpty ? '' : "#${player['number']}", 
                   style: TextStyle(color: Colors.blue, fontSize: 30.0)), 
         ) //ListTile
     )); //Container / Card
@@ -116,7 +115,11 @@ class _RosterPageState extends State<RosterPage> {
             return new ListView.builder(
                 itemCount: rosterList.length, 
                 itemBuilder: (context, position) {
-                  return _playerCard(rosterList, position);  
+                  final player = rosterList[position]; 
+                  return Dismissible( 
+                      key: Key(player.documentID), 
+                      child: _playerCard(player),  
+                    ); 
                 } //itemBuilder
           ); //ListView.builder 
         } //switch
