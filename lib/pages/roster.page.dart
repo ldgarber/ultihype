@@ -22,6 +22,57 @@ class _RosterPageState extends State<RosterPage> {
     });  
   } //build
 
+  Widget _playerCard(rosterList, position) {
+    var container = AppStateContainer.of(context); 
+    appState = container.state; 
+
+    var doc = rosterList[position]; 
+    var nickname = doc['nickname'] == null ? '' : '"${doc['nickname']}"'; 
+    var lastName = doc['lastName'] == null ? '' : doc['lastName']; 
+    var number = doc['number'] == null ? '' : doc['number']; 
+
+    return Card(
+      elevation: 8.0,
+      margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+      color: Colors.transparent, 
+      child: Container(
+        decoration: BoxDecoration(
+            color: Color.fromARGB(255, 155, 226, 255), 
+            borderRadius: BorderRadius.all(const Radius.circular(8.0)),  
+            ),
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0), 
+          leading: Container(
+              padding: EdgeInsets.only(right: 12.0), 
+              decoration: new BoxDecoration(
+                  border: new Border(
+                      right: new BorderSide(width: 1.0))), 
+              child: Icon(Icons.directions_run, color: Colors.black), 
+          ), 
+          title: Text(
+              '${doc['firstName']} ${nickname} ${lastName}', 
+              style: TextStyle(
+                  color: Colors.black, 
+                  fontSize: 22, 
+                  fontWeight: FontWeight.bold),  
+          ), 
+          subtitle: Row(
+            children: <Widget>[
+              Text(
+                  doc['height'] ?? ''), 
+              //vertical dividing line here
+              Text(
+                  doc['position'] ?? ''), 
+            ],
+          ),
+          trailing:
+              Text(number.isEmpty ? '' : "#${doc['number']}", 
+                  style: TextStyle(color: Colors.blue, fontSize: 30.0)), 
+        ) //ListTile
+    )); //Container / Card
+
+  } 
+
   Widget get _rosterView {
     var container = AppStateContainer.of(context); 
     var user = appState.user; 
@@ -53,7 +104,8 @@ class _RosterPageState extends State<RosterPage> {
     appState = container.state; 
 
     return StreamBuilder<QuerySnapshot>(
-      stream: container.players.where('team', isEqualTo: appState.activeTeam).orderBy("firstName").snapshots(), 
+      stream: container.players.where('team', isEqualTo: appState.activeTeam)
+                                  .orderBy("firstName").snapshots(), 
       builder: (BuildContext context, 
                 AsyncSnapshot<QuerySnapshot> snapshot) {
         switch (snapshot.connectionState) {
@@ -64,50 +116,8 @@ class _RosterPageState extends State<RosterPage> {
             return new ListView.builder(
                 itemCount: rosterList.length, 
                 itemBuilder: (context, position) {
-                  var doc = rosterList[position]; 
-                  var nickname = doc['nickname'] == null ? '' : '"${doc['nickname']}"'; 
-                  var lastName = doc['lastName'] == null ? '' : doc['lastName']; 
-                  var number = doc['number'] == null ? '' : doc['number']; 
-                   return Card(
-                    elevation: 8.0,
-                    margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-                    color: Colors.transparent, 
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 155, 226, 255), 
-                          borderRadius: BorderRadius.all(const Radius.circular(8.0)),  
-                          ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0), 
-                        leading: Container(
-                            padding: EdgeInsets.only(right: 12.0), 
-                            decoration: new BoxDecoration(
-                                border: new Border(
-                                    right: new BorderSide(width: 1.0))), 
-                            child: Icon(Icons.directions_run, color: Colors.black), 
-                        ), 
-                        title: Text(
-                            '${doc['firstName']} ${nickname} ${lastName}', 
-                            style: TextStyle(
-                                color: Colors.black, 
-                                fontSize: 22, 
-                                fontWeight: FontWeight.bold),  
-                        ), 
-                        subtitle: Row(
-                          children: <Widget>[
-                            Text(
-                                doc['height'] ?? ''), 
-                            //vertical dividing line here
-                            Text(
-                                doc['position'] ?? ''), 
-                          ],
-                        ),
-                        trailing:
-                            Text(number.isEmpty ? '' : "#${doc['number']}", 
-                                style: TextStyle(color: Colors.blue, fontSize: 30.0)), 
-                      ) //ListTile
-                  )); //Container / Card
-            } //itemBuilder
+                  return _playerCard(rosterList, position);  
+                } //itemBuilder
           ); //ListView.builder 
         } //switch
       } //builder
