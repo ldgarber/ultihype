@@ -29,6 +29,17 @@ class _AddPlayerPageState extends State<AddPlayerPage> {
     });  
   } //build
 
+  @override 
+  void dispose() {
+    firstNameController.dispose(); 
+    lastNameController.dispose(); 
+    nicknameController.dispose(); 
+    heightController.dispose(); 
+    numberController.dispose(); 
+
+    super.dispose(); 
+  }
+
   Widget get _addPlayerView {
     var container = AppStateContainer.of(context); 
     var user = appState.user; 
@@ -49,17 +60,6 @@ class _AddPlayerPageState extends State<AddPlayerPage> {
     var container = AppStateContainer.of(context); 
     var user = appState.user; 
     var team = appState.activeTeam;  
-
-    @override 
-    void dispose() {
-      firstNameController.dispose(); 
-      lastNameController.dispose(); 
-      nicknameController.dispose(); 
-      heightController.dispose(); 
-      numberController.dispose(); 
-
-      super.dispose(); 
-    }
 
     return Center(
         child: Container(
@@ -138,21 +138,32 @@ class _AddPlayerPageState extends State<AddPlayerPage> {
 
                 RaisedButton (
                   child: const Text('Save'), 
-                  onPressed: () async {
-                    container.addPlayer({
+                  onPressed: () => submitPlayer(context), 
+                )
+              ]) //Column
+            ) //Container
+          ); // Center
+  } //_addPlayerView
+
+  Future<void> submitPlayer(BuildContext context) async {
+    var container = AppStateContainer.of(context); 
+
+    if (firstNameController.text.isEmpty) {
+      print('First name is required!'); 
+    } else if (lastNameController.text.isEmpty) {
+      print('Last name is required!'); 
+    } else { 
+      var newPlayer = {
                       "firstName": firstNameController.text, 
                       "lastName": lastNameController.text, 
                       "nickname": nicknameController.text, 
                       "height": heightController.text, 
                       "number": numberController.text
-                    });   
-                    Navigator.of(context).pop(); 
-                  }), 
-              ] 
-              ) //Column
-            ) //Container
-          ); // Center
-  } //_addPlayerView
+                    }; 
+      container.addPlayer(newPlayer); 
+      Navigator.of(context).pop(); 
+    } 
+  } 
 
 }
 
