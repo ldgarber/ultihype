@@ -47,7 +47,9 @@ class _RosterPageState extends State<RosterPage> {
               decoration: new BoxDecoration(
                   border: new Border(
                       right: new BorderSide(width: 1.0))), 
-              child: Icon(Icons.directions_run, color: Colors.black), 
+              child: Text(number.isEmpty ? '' : "#${player['number']}", 
+                  style: TextStyle(color: Colors.blue, fontSize: 30.0)), 
+
           ), 
           title: Text(
               '${player['firstName']} ${nickname} ${lastName}', 
@@ -66,8 +68,7 @@ class _RosterPageState extends State<RosterPage> {
             ],
           ),
           trailing:
-              Text(number.isEmpty ? '' : "#${player['number']}", 
-                  style: TextStyle(color: Colors.blue, fontSize: 30.0)), 
+              Text("Edit menu here"), 
         ) //ListTile
     )); //Container / Card
 
