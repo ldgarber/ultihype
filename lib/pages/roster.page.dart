@@ -68,10 +68,17 @@ class _RosterPageState extends State<RosterPage> {
             ],
           ),
           trailing:
-              Text("Edit menu here"), 
+            IconButton(
+              icon: Icon(Icons.edit), 
+              highlightColor: Colors.black, 
+              onPressed: () { _onEditButtonPressed();}, 
+            ), 
         ) //ListTile
     )); //Container / Card
+  } 
 
+  void _onEditButtonPressed() {
+    debugPrint("Edit pressed"); 
   } 
 
   Widget get _rosterView {
