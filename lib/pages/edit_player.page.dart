@@ -13,7 +13,7 @@ class EditPlayerPage extends StatefulWidget {
 
 class _EditPlayerPageState extends State<EditPlayerPage> {
   AppState appState; 
-
+  
   final firstNameController = TextEditingController(); 
   final lastNameController = TextEditingController(); 
   final nicknameController = TextEditingController(); 
