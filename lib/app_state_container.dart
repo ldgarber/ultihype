@@ -178,8 +178,15 @@ class _AppStateContainerState extends State<AppStateContainer> {
       'number': player['number'], 
       'team': state.activeTeam, 
       'uid': state.user.uid
-    }); 
+    }).then((result) {debugPrint(result.documentID);}); 
     debugPrint("added player"); 
+  } 
+
+  Future<void> updatePlayer(playerID, newPlayer) async {
+    players.document(playerID).updateData(
+      newPlayer 
+    ); 
+    debugPrint("updated player"); 
   } 
 
   Future<void> deletePlayer(String player_id) async {

@@ -3,6 +3,7 @@ import 'package:ultihype/main.dart';
 import 'package:ultihype/app_state_container.dart'; 
 import 'package:ultihype/models/app_state.dart'; 
 import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:ultihype/pages/edit_player.page.dart'; 
 
 class RosterPage extends StatefulWidget {
   @override
@@ -22,10 +23,20 @@ class _RosterPageState extends State<RosterPage> {
     });  
   } //build
 
-  Widget _playerCard(player) {
+  Widget _playerCard(playerSnapshot) {
     var container = AppStateContainer.of(context); 
     appState = container.state; 
 
+    var player = {
+      "id": playerSnapshot.documentID, 
+      "firstName": playerSnapshot["firstName"], 
+      "lastName": playerSnapshot["lastName"], 
+      "nickname": playerSnapshot["nickname"], 
+      "height": playerSnapshot["height"], 
+      "number": playerSnapshot["number"], 
+    };  
+
+    //display variables
     var nickname = player['nickname'] == null ? '' : '"${player['nickname']}"'; 
     var lastName = player['lastName'] == null ? '' : player['lastName']; 
     var number = player['number'] == null ? '' : player['number']; 
@@ -63,15 +74,22 @@ class _RosterPageState extends State<RosterPage> {
               Text(
                   player['height'] ?? ''), 
               //vertical dividing line here
-              Text(
-                  player['position'] ?? ''), 
+              //show position once it exists
+              Text(player["id"]), 
             ],
           ),
           trailing:
             IconButton(
               icon: Icon(Icons.edit), 
               highlightColor: Colors.black, 
-              onPressed: () { _onEditButtonPressed();}, 
+              onPressed: () async { 
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => EditPlayerPage(player: player)
+                  ), 
+                ); 
+              }
             ), 
         ) //ListTile
     )); //Container / Card
@@ -131,7 +149,7 @@ class _RosterPageState extends State<RosterPage> {
                 : new ListView.builder(
                 itemCount: rosterList.length, 
                 itemBuilder: (context, position) {
-                  final player = rosterList[position]; 
+                  final playerSnapshot = rosterList[position]; 
                   return Dismissible( 
                       background: Container(
                           alignment: AlignmentDirectional.centerEnd,
@@ -141,16 +159,16 @@ class _RosterPageState extends State<RosterPage> {
                             child: Icon(Icons.delete, color: Colors.white,), 
                           ), 
                       ), 
-                      key: Key(player.documentID), 
+                      key: Key(playerSnapshot.documentID), 
                       direction: DismissDirection.endToStart, 
                       onDismissed: (direction) {
-                        container.deletePlayer(player.documentID); 
+                        container.deletePlayer(playerSnapshot.documentID); 
                        
                         Scaffold
                           .of(context) 
                           .showSnackBar(SnackBar(content:Text("Player deleted"))); 
                       }, //onDismissed 
-                      child: _playerCard(player),  
+                      child: _playerCard(playerSnapshot),  
                     ); 
                 } //itemBuilder
           ); //ListView.builder 
